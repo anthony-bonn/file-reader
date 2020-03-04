@@ -40,8 +40,8 @@ namespace FileReader.Services.Services
 
             vm.Original = result.Item2;
 
-            // encryption not required or filetype doesn't allow encryption
-            if (!vm.Encrypt || fileType != FileType.Text) return vm;
+            // encryption not required
+            if (!vm.Encrypt) return vm;
 
             // encryption required
             vm.Encrypted = InitEcnryptor(vm.EncryptionType, new List<string>(vm.Original), protector).Encrypt();
