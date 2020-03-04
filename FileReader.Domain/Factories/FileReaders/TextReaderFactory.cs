@@ -7,6 +7,6 @@ namespace FileReader.Domain.Factories.FileReaders
 {
     public class TextReaderFactory : FileReaderFactory
     {
-        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user = null) => new TextReader(sourceFile);
+        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user) => new TextReader(sourceFile, user);
     }
 }

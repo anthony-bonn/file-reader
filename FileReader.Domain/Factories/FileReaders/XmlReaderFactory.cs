@@ -7,6 +7,6 @@ namespace FileReader.Domain.Factories.FileReaders
 {
     public class XmlReaderFactory : FileReaderFactory
     {
-        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user = null) => new XmlReader(sourceFile, user);
+        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user) => new XmlReader(sourceFile, user);
     }
 }
