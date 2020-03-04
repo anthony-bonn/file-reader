@@ -41,7 +41,7 @@ namespace FileReader.Services.Services
             vm.Original = result.Item2;
 
             // encryption not required
-            if (!vm.Encrypt) return vm;
+            if (!vm.Encrypt || fileType == FileType.Json) return vm;
 
             // encryption required
             vm.Encrypted = InitEcnryptor(vm.EncryptionType, new List<string>(vm.Original), protector).Encrypt();

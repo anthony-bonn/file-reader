@@ -17,10 +17,12 @@ namespace FileReader.Domain.Helpers
             // supported fileTypes:
             // text/plain
             // text/xml
+            // application/json
             fileType = contentType switch
             {
                 "text/plain" => FileType.Text,
                 "text/xml" => FileType.Xml,
+                "application/json" => FileType.Json,
                 _ => throw new NotSupportedException(message: "This type of file isn't supported."),
             };
         }
