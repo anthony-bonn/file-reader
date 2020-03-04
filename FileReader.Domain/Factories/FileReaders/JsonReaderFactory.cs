@@ -7,6 +7,6 @@ namespace FileReader.Domain.Factories.FileReaders
 {
     public class JsonReaderFactory : FileReaderFactory
     {
-        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user) => new JsonReader(sourceFile);
+        public override IFileReader Create(IFormFile sourceFile, ClaimsPrincipal user) => new JsonReader(sourceFile, user);
     }
 }
