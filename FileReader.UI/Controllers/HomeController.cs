@@ -5,15 +5,18 @@ using Microsoft.AspNetCore.Mvc;
 using FileReader.Shared.Models.ViewModels;
 using FileReader.Services.IServices;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace FileReader.UI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IFileService _fileService;
+        private readonly IDataProtector _protector;
 
-        public HomeController(IFileService fileService)
+        public HomeController(IFileService fileService, IDataProtectionProvider provider)
         {
+            _protector = provider.CreateProtector("FileReader.UI.HomeController");
             _fileService = fileService;
         }
 
@@ -25,7 +28,7 @@ namespace FileReader.UI.Controllers
         {
             if (!ModelState.IsValid) return View(vm);
 
-            vm = await _fileService.Process(vm);
+            vm = await _fileService.Process(vm, _protector);
 
             return View(vm);
         }

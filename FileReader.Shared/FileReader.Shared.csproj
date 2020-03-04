@@ -8,4 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FileReader.Domain\FileReader.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

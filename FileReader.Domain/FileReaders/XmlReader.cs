@@ -11,10 +11,7 @@ namespace FileReader.Domain.FileReaders
     {
         private readonly IFormFile _sourceFile;
 
-        public XmlReader(IFormFile sourceFile)
-        {
-            _sourceFile = sourceFile;
-        }
+        public XmlReader(IFormFile sourceFile) => _sourceFile = sourceFile;
 
         // For now all ReadFile methods perform the same logic
         // Deserialization logic could be added here if required

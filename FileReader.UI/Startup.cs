@@ -29,6 +29,9 @@ namespace FileReader.UI
             services.AddScoped<IFileService, FileService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            // IDataProtector API
+            services.AddDataProtection();
+
             services.AddControllersWithViews();
         }
 

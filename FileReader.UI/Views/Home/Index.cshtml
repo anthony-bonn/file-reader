@@ -31,6 +31,17 @@
                 <span class="input-validation" asp-validation-for="File"></span>
             </div>
             <div class="input-group">
+                <label class="input-label input-checkbox-container" asp-for="Encrypt">
+                    Encrypt
+                    <input class="input-checkbox" asp-for="Encrypt" type="checkbox" tabindex="4" />
+                    <span class="input-checkbox-span"></span>
+                </label>
+            </div>
+            <div class="input-group">
+                <label class="input-label" asp-for="EncryptionType"></label>
+                <select class="input-dropdown" asp-for="EncryptionType" asp-items="Html.GetEnumSelectList<EncryptionType>()" tabindex="5"></select>
+            </div>
+            <div class="input-group">
                 <input class="input-button" type="submit" value="Parse File" tabindex="6" />
             </div>
         </form>
@@ -47,6 +58,19 @@
                     <div class="home__result__title">Original</div>
                     <div class="home__result__content">
                         @foreach (var line in Model.Original)
+                        {
+                            <p>@line</p>
+                        }
+                    </div>
+                </div>
+            }
+            @if (Model.Encrypted?.Count > 0)
+            {
+                <!-- Result displaying encrypted file content -->
+                <div class="home__result">
+                    <div class="home__result__title">Encrypted</div>
+                    <div class="home__result__content">
+                        @foreach (var line in Model.Encrypted)
                         {
                             <p>@line</p>
                         }
