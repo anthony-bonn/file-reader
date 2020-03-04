@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReader.Domain", "FileRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReader.Services", "FileReader.Services\FileReader.Services.csproj", "{DABA2C73-74FB-4155-9136-19C41F4F3840}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReader.Shared", "FileReader.Shared\FileReader.Shared.csproj", "{DD0F90AB-7F02-4A99-9F79-603A8B15A78F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DABA2C73-74FB-4155-9136-19C41F4F3840}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DABA2C73-74FB-4155-9136-19C41F4F3840}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DABA2C73-74FB-4155-9136-19C41F4F3840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0F90AB-7F02-4A99-9F79-603A8B15A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0F90AB-7F02-4A99-9F79-603A8B15A78F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0F90AB-7F02-4A99-9F79-603A8B15A78F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0F90AB-7F02-4A99-9F79-603A8B15A78F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

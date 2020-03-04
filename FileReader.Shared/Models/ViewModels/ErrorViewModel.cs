@@ -1,6 +1,4 @@
-using System;
-
-namespace FileReader.UI.Models
+namespace FileReader.Shared.Models.ViewModels
 {
     public class ErrorViewModel
     {

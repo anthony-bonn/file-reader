@@ -1,8 +1,96 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model FileReaderViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home">
+    <div class="home__form">
+        <!-- Form top contains theme button -->
+        <div class="home__form__top">
+            <button class="input-icon" onclick="setTheme()" tabindex="1">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     width="21"
+                     height="21"
+                     viewBox="0 0 21 21"
+                     aria-labelledby="theme-icon"
+                     role="presentation"
+                     class="svg-icon">
+                    <title id="theme-icon" lang="en">theme icon</title>
+                    <g>
+                        <circle id="svg-circle" cx="10" cy="10" r="10" />
+                    </g>
+                </svg>
+            </button>
+        </div>
+        <!-- Form bottom contains file parser input items -->
+        <form class="home__form__bottom" asp-controller="Home" asp-action="Index" method="post" enctype="multipart/form-data">
+            <div class="input-group">
+                <label class="input-label" asp-for="File"></label>
+                <div class="input-file-container">
+                    <input id="fileInput" class="input-file" asp-for="File" type="file" />
+                    <label id="fileButton" class="input-file-label" for="fileInput" tabindex="3">Select a file</label>
+                    <p id="fileName" class="input-file-filename">&nbsp;</p>
+                </div>
+                <span class="input-validation" asp-validation-for="File"></span>
+            </div>
+            <div class="input-group">
+                <input class="input-button" type="submit" value="Parse File" tabindex="6" />
+            </div>
+        </form>
+    </div>
+
+    <!-- Result container -->
+    <div class="home__result__container">
+        @if (Model?.File != null)
+        {
+            @if (Model.Original?.Count > 0)
+            {
+                <!-- Result displaying original file content -->
+                <div class="home__result">
+                    <div class="home__result__title">Original</div>
+                    <div class="home__result__content">
+                        @foreach (var line in Model.Original)
+                        {
+                            <p>@line</p>
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </div>
 </div>
+
+<script>
+    // theme button onclick handler
+    setTheme = () => {
+        let container = document.getElementById("container");
+        let current = container.dataset.theme;
+
+        // change theme on click
+        container.dataset.theme = current === "dark" ? "light" : "dark";
+
+        // create theme cookie to use on next pageload
+        $.post("/Home/SetTheme", {
+            data: current
+        });
+    };
+
+    var fileInput = document.querySelector("#fileInput")
+    fileButton = document.querySelector("#fileButton"),
+        fileName = document.querySelector("#fileName");
+
+    // on keydown
+    fileButton.addEventListener("keydown", function (event) {
+        if (event.keyCode == 13 || event.keyCode == 32)
+            fileInput.focus();
+    })
+
+    // on click
+    fileButton.addEventListener("click", function (event) {
+        fileInput.focus();
+        return false;
+    })
+
+    // change label value based on selected file
+    fileInput.addEventListener("change", function (event) {
+        fileName.innerHTML = this.value;
+    })
+
+</script>

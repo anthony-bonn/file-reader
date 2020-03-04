@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FileReader.Domain\FileReader.Domain.csproj" />
+    <ProjectReference Include="..\FileReader.Shared\FileReader.Shared.csproj" />
   </ItemGroup>
 
 </Project>
