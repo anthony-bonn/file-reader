@@ -3,7 +3,7 @@ using System;
 
 namespace FileReader.Domain.Helpers
 {
-    public class Helpers
+    public static class Helpers
     {
         /// <summary>
         /// Gets FileType enum based on file content type
@@ -15,9 +15,11 @@ namespace FileReader.Domain.Helpers
         {
             // supported fileTypes:
             // text/plain
+            // text/xml
             fileType = contentType switch
             {
                 "text/plain" => FileType.Text,
+                "text/xml" => FileType.Xml,
                 _ => throw new NotSupportedException(message: "This type of file isn't supported."),
             };
         }

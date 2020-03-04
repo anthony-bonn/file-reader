@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FileReader.Domain.FileReaders
 {
-    public class TextReader : IFileReader
+    public class XmlReader : IFileReader
     {
         private readonly IFormFile _sourceFile;
 
-        public TextReader(IFormFile sourceFile)
+        public XmlReader(IFormFile sourceFile)
         {
             _sourceFile = sourceFile;
         }

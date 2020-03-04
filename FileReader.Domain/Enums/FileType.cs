@@ -2,6 +2,7 @@
 {
     public enum FileType
     {
-        Text
+        Text,
+        Xml
     }
 }
