@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FileReader.Domain.Factories.FileReaders;
 using FileReader.Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace FileReader.Domain.FileReaders
 {
@@ -31,6 +32,6 @@ namespace FileReader.Domain.FileReaders
 
         public static FileReaderService InitFactories() => new FileReaderService();
 
-        public IFileReader InitFileReader(FileType fileType, IFormFile sourceFile) => _factories[fileType].Create(sourceFile);
+        public IFileReader InitFileReader(FileType fileType, IFormFile sourceFile, ClaimsPrincipal user) => _factories[fileType].Create(sourceFile, user);
     }
 }

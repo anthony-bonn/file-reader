@@ -11,7 +11,7 @@
 </head>
 <body>
     @{
-        var cookie = httpContextAccessor.HttpContext.Request.Cookies["FileReader.theme"]?.ToString();
+        var cookie = httpContextAccessor.HttpContext.Request.Cookies["FileReader.UI.Theme"]?.ToString();
         var theme = string.IsNullOrEmpty(cookie) ? "dark" : cookie;
     }
 

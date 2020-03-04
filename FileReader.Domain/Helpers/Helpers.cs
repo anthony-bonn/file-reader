@@ -1,5 +1,6 @@
 ﻿using FileReader.Domain.Enums;
 using System;
+using System.Security.Claims;
 
 namespace FileReader.Domain.Helpers
 {
@@ -21,6 +22,19 @@ namespace FileReader.Domain.Helpers
                 "text/plain" => FileType.Text,
                 "text/xml" => FileType.Xml,
                 _ => throw new NotSupportedException(message: "This type of file isn't supported."),
+            };
+        }
+
+        public static bool IsUserAllowed(ClaimsPrincipal user)
+        {
+            Random random = new Random();
+
+            return user.Identity.Name switch
+            {
+                "None" => true,
+                "Admin" => true,
+                "Member" => Convert.ToBoolean(random.Next(0, 2)),
+                _ => false
             };
         }
     }

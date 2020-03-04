@@ -27,10 +27,20 @@ namespace FileReader.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IAuthService, AuthService>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // IDataProtector API
             services.AddDataProtection();
+
+            // Cookie authentication
+            services.AddAuthentication("FileReader.Cookie")
+                .AddCookie("FileReader.Cookie", config =>
+                {
+                    config.Cookie.Name = "FileReader.Cookie";
+                    config.LoginPath = "/Home/Authentication";
+                });
 
             services.AddControllersWithViews();
         }
@@ -53,13 +63,17 @@ namespace FileReader.UI
 
             app.UseRouting();
 
+            // verify authentication
+            app.UseAuthentication();
+
+            // can the authenticated user access this action
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Authentication}/{id?}");
             });
         }
     }
