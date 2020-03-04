@@ -1,0 +1,143 @@
+﻿/// <reference path="../abstracts/mixins/_css-variables.scss" />
+
+.input {
+    &-group {
+        padding: 2.5rem 0;
+        border-top: 2px solid;
+        @include sv(border-color, accent);
+        display: grid;
+        grid-row-gap: 1rem;
+    }
+
+    &-label {
+        @extend %title-primary;
+    }
+
+    &-file, &-checkbox, &-dropdown {
+        cursor: pointer;
+    }
+
+    &-file {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        opacity: 0;
+        cursor: pointer;
+
+        &-container {
+            position: relative;
+            width: 25rem;
+        }
+
+        &-label {
+            @include sv(font-family, secondary);
+            @include sv(background-color, text);
+            @include sv(color, background);
+            padding: 1rem 2rem;
+            font-size: 2.5rem;
+            letter-spacing: 0.3rem;
+            line-height: 1.4;
+            cursor: pointer;
+            display: block;
+            padding: 1rem 2rem;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        &-filename {
+            padding-top: .5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    &-checkbox {
+        &-container {
+            display: block;
+            position: relative;
+            width: 25rem;
+            cursor: pointer;
+
+            &:hover .input-checkbox ~ .input-checkbox-span {
+                @include sv(background-color, accent);
+            }
+
+            & .input-checkbox:checked ~ .input-checkbox-span {
+                @include sv(background-color, accent);
+            }
+
+            & .input-checkbox:checked ~ .input-checkbox-span:after {
+                display: block;
+            }
+        }
+
+        position: absolute;
+        top: .2rem;
+        right: 0;
+        height: 3rem;
+        width: 3rem;
+        opacity: 0;
+
+        &-span {
+            position: absolute;
+            top: .2rem;
+            right: 0;
+            height: 3rem;
+            width: 3rem;
+            cursor: pointer;
+            background-color: #bababa;
+
+            &:after {
+                content: "";
+                position: absolute;
+                display: none;
+                left: 1.05rem;
+                top: .21rem;
+                width: 1rem;
+                height: 2.1rem;
+                border-style: solid;
+                @include sv(border-color, background);
+                border-width: 0 .3rem .3rem 0;
+                transform: rotate(45deg);
+            }
+        }
+    }
+
+    &-dropdown {
+        height: 3rem;
+        border: none;
+        @extend %text;
+        @include sv(color, background);
+        @include sv(background-color, text);
+    }
+
+    &-button {
+        @include sv(font-family, secondary);
+        @include sv(background-color, text);
+        @include sv(color, background);
+        padding: 1rem 2rem;
+        font-size: 2.5rem;
+        letter-spacing: 0.3rem;
+        line-height: 1.4;
+        text-transform: uppercase;
+        border: none;
+        cursor: pointer;
+    }
+
+    &-icon {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+
+        svg {
+            @include sv(fill, text);
+        }
+    }
+
+    &-validation {
+        @include sv(color, accent);
+    }
+}
+
+

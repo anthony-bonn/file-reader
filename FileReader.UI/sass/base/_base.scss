@@ -1,0 +1,81 @@
+/// <reference path="../themes/_themes.scss" />
+/// <reference path="../abstracts/mixins/_css-variables.scss" />
+
+// GLOBAL RESET
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+  outline: none;
+}
+
+:root {
+  // for each variable map
+  @each $var-map-name, $var-map in map-get($theme, default) {
+    // for each variable in the variable map
+    @each $var, $val in $var-map {
+      // if the variable is a map
+      @if type-of($val) == map {
+        // for each variable in the map
+        @each $var-nth, $val-nth in $val {
+          // create css4 variable definition
+          #{$var-prefix}#{$var-map-name}-#{$var}-#{$var-nth}: $val-nth;
+        }
+      } @else {
+        // create css4 variable definition
+        #{$var-prefix}#{$var-map-name}-#{$var}: $val;
+      }
+    }
+  }
+}
+
+// for each theme in theme map (except for default), example: dark
+@each $theme-name, $theme-map in $theme {
+  @if $theme-name != "default" {
+    [data-theme="#{$theme-name}"] {
+      // for each map name in them map, example: color
+      @each $theme-map-name, $theme-map-prop in $theme-map {
+        // for each variable in the map, example: primary
+        @each $var, $val in $theme-map-prop {
+          // if the variable is a map
+          @if type-of($val) == map {
+            // for each variable in the map
+            @each $var-nth, $val-nth in $val {
+              // create css4 variable definition
+              #{$theme-map-name}-#{$var}-#{$var-nth}: $val-nth;
+            }
+          } @else {
+            // create css4 variable definition
+            #{--$theme-map-name}-#{$var}: $val;
+          }
+        }
+      }
+    }
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; //62.5% from default 16px = 10px | easier to work with
+}
+
+.container {
+    @include sv(background-color, background);
+    @extend %text;
+    width: 100%;
+    height: 100vh;
+}
+
+*::-webkit-scrollbar {
+    width: .5rem;
+}
+
+*::-webkit-scrollbar-thumb {
+    @include sv(background-color, accent);
+}

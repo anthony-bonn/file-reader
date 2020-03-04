@@ -1,0 +1,81 @@
+/// <reference path="../mixins/_css-variables.scss" />
+/// <reference path="../mixins/_respond.scss" />
+
+/* TITLE */
+%title-primary {
+    @include sv(font-family, secondary);
+    @include sv(color, text);
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.3rem;
+    line-height: 1;
+    font-size: 2.5rem;
+
+    @include respond(tab-port) {
+        font-size: 3rem;
+    }
+
+    @include respond(desktop) {
+        font-size: 3.5rem;
+    }
+}
+
+%title-secondary {
+  @include sv(font-family, secondary);
+  @include sv(color, text);
+
+  text-decoration: none;
+
+  letter-spacing: 0.3rem;
+  line-height: 1.4;
+
+  font-size: 2.5rem;
+
+  @include respond(tab-port) {
+    font-size: 3rem;
+  }
+  @include respond(desktop) {
+    font-size: 3.5rem;
+  }
+}
+
+/* TEXT */
+
+%text {
+    @include sv(font-family, primary);
+    @include sv(color, text);
+    font-weight: 400;
+    font-size: 1.6rem; //default font-size = 16 px | root 10px * 1.6
+    line-height: 1.6;
+}
+
+%console {
+  @include sv(font-family, secondary);
+  @include sv(color, text);
+
+  font-weight: 400;
+  font-style: italic;
+
+  font-size: 1.4rem;
+}
+
+/* TITLE */
+%form-title {
+    @include sv(font-family, secondary);
+    @include sv(color, text);
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+    line-height: 1.4;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    border-top: 2px solid;
+    @include sv(border-color, accent);
+
+    @include respond(tab-port) {
+        font-size: 3rem;
+    }
+
+    @include respond(desktop) {
+        font-size: 3.5rem;
+    }
+}

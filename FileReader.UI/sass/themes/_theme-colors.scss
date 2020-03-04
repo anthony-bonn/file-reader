@@ -1,0 +1,44 @@
+/// <reference path="../variables/_colors.scss" />
+
+// variable map
+$default-colors: (
+  background: $theme-dark--primary,
+  background-secondary: lighten($theme-dark--primary, 80%),
+  background-opaque: rgba($theme-dark--primary, 0.1),
+  background-box: darken($theme-dark--primary, 1%),
+  text: $theme-dark--text,
+  accent: $theme-dark--accent,
+  nav-background: rgba($theme-dark--primary, 0.8),
+  nav-box-shadow: 0 3px 10px darken($theme-dark--primary, 6%),
+  box-shadow: 0 0.21rem 1.2rem darken($theme-dark--primary, 6%),
+  image-filter: brightness(90%),
+  border-color: $theme-dark--accent
+);
+
+$dark-colors: (
+  background: $theme-dark--primary,
+  background-secondary: lighten($theme-dark--primary, 80%),
+  background-opaque: rgba($theme-dark--primary, 0.5),
+  background-box: darken($theme-dark--primary, 1%),
+  text: $theme-dark--text,
+  accent: $theme-dark--accent,
+  nav-background: rgba($theme-dark--primary, 0.8),
+  nav-box-shadow: 0 0 50px 50px $theme-dark--primary,
+  box-shadow: 0 0.21rem 1.2rem darken($theme-dark--primary, 6%),
+  image-filter: brightness(90%),
+  border-color: $theme-dark--accent
+);
+
+$light-colors: (
+  background: $theme-light--primary,
+  background-secondary: darken($theme-light--primary, 80%),
+  background-opaque: rgba($theme-light--primary, 0.5),
+  background-box: darken($theme-light--primary, 3%),
+  text: $theme-light--text,
+  accent: $theme-light--accent,
+  nav-background: rgba($theme-light--primary, 0.8),
+  nav-box-shadow: 0 0 50px 50px $theme-light--primary,
+  box-shadow: 0 0.21rem 1.2rem darken($theme-dark--primary, 6%),
+  image-filter: brightness(100%),
+  border-color: $theme-light--accent
+);

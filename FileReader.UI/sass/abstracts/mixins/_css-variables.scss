@@ -1,0 +1,43 @@
+$var-prefix: "--";
+
+// mixin creates css property with --css-variable ($var) as value
+// creates a fallback by default for browsers that don't support css variables
+@mixin sv($prop, $var) {
+  // get map name(s) from the default theme map based on $prop param
+  $theme-default: map-get($theme, default);
+  // get prop pointer from $var-props map based on $prop param
+  $map-name: map-get($var-props, $prop);
+
+  $nested-map: null;
+  $nested-prop: null;
+  $map: null;
+  $css-fall: null;
+  $css-var: null;
+
+  // if map-name (prop from $props map based on $prop param) is a list
+  // example: if $prop = font-family, $map-name = (font, family)
+  @if type-of($map-name) == list {
+    $nested-map: nth($map-name, 1);
+    $nested-prop: nth($map-name, 2);
+  }
+
+  // if nested map
+  @if $nested-map {
+    // get map from nested map name
+    $map: map-get($theme-default, $nested-map);
+    // get nested map
+    $nested: map-get($map, $nested-prop);
+
+    $css-fall: map-get($nested, $var);
+    $css-var: var(#{$var-prefix}#{$nested-map}-#{$nested-prop}-#{$var});
+  } @else {
+    // get map from map name
+    $map: map-get($theme-default, $map-name);
+
+    $css-fall: map-get($map, $var);
+    $css-var: var(#{$var-prefix}#{$map-name}-#{$var});
+  }
+  // css fallback and css4 variable
+  #{$prop}: $css-fall;
+  #{$prop}: $css-var;
+}
