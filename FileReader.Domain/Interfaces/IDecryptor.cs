@@ -2,8 +2,8 @@
 
 namespace FileReader.Domain.Interfaces
 {
-    public interface IFileReader
+    public interface IDecryptor
     {
-        Task<string> Read();
+        Task<string> Decrypt();
     }
 }

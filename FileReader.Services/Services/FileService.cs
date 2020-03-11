@@ -1,14 +1,8 @@
-﻿using FileReader.Domain.Encryptors;
-using FileReader.Domain.Enums;
-using FileReader.Domain.FileReaders;
+﻿using FileReader.Domain.Decryptors;
 using FileReader.Domain.Helpers;
-using FileReader.Domain.Interfaces;
 using FileReader.Services.IServices;
 using FileReader.Shared.Models.ViewModels;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,51 +10,25 @@ namespace FileReader.Services.Services
 {
     public class FileService : IFileService
     {
-        public async Task<FileReaderViewModel> Process(FileReaderViewModel vm, IDataProtector protector, ClaimsPrincipal user)
+        public async Task<Tuple<bool, byte[], string>> Process(FileReaderViewModel vm, ClaimsPrincipal user)
         {
-            FileType fileType;
+            // throws NotSupportedException if file type isn't supported
+            Helpers.IsFileTypeSupported(vm.File.ContentType);
 
-            try
-            {
-                // throws NotSupportedException if file type isn't supported
-                Helpers.GetFileTypeEnumFromContentType(vm.File.ContentType, out fileType);
-            }
-            catch (NotSupportedException e)
-            {
-                vm.Original = new List<string>() { e.Message };
-                return vm;
-            }
+            // is user allowed?
+            if (!Helpers.IsUserAllowed(user)) return Tuple.Create(false, Array.Empty<byte>(), "");
 
-            var result = await InitFileReader(fileType, vm.File, user).ProcessFile();
+            string content;
 
-            vm.IsAllowedToRead = result.Item1;
+            // get file content
+            if (!vm.Encrypted) content = await new Domain.FileReaders.FileReader(vm.File).Read();
+            else content = await new ReverseDecryptor(vm.File).Decrypt();
 
-            // user not allowed to read file
-            if (!vm.IsAllowedToRead) return vm;
+            // get bytes from content
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(content);
 
-            vm.Original = result.Item2;
-
-            // encryption not required
-            if (!vm.Encrypt) return vm;
-
-            // encryption required
-            vm.Encrypted = InitEcnryptor(vm.EncryptionType, new List<string>(vm.Original), protector).Encrypt();
-
-            return vm;
-        }
-
-        private static IFileReader InitFileReader(FileType fileType, IFormFile file, ClaimsPrincipal user)
-        {
-            // factory design pattern
-            // gets filereader based on fileType
-            return FileReaderService.InitFactories().InitFileReader(fileType, file, user);
-        }
-
-        private static IEncryptor InitEcnryptor(EncryptionType encryptionType, List<string> source, IDataProtector protector)
-        {
-            // factory design pattern
-            // get encryptor based on encryptionType
-            return EncryptorService.InitFactories().InitEncryptor(encryptionType, source, protector);
+            // return bytes and contenttype
+            return Tuple.Create(true, bytes, vm.File.ContentType);
         }
     }
 }

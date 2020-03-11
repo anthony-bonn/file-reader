@@ -30,71 +30,27 @@
             </button>
         </div>
         <!-- Form bottom contains file parser input items -->
-        <form class="home__form__bottom" asp-controller="Home" asp-action="Index" method="post" enctype="multipart/form-data">
+        <form class="home__form__bottom" asp-controller="Home" asp-action="Index" method="post" enctype="multipart/form-data" target="_blank">
             <div class="input-group">
                 <label class="input-label" asp-for="File"></label>
                 <div class="input-file-container">
-                    <input id="fileInput" class="input-file" asp-for="File" type="file" />
+                    <input id="fileInput" class="input-file" asp-for="File" type="file" tabindex="2" />
                     <label id="fileButton" class="input-file-label" for="fileInput" tabindex="3">Select a file</label>
                     <p id="fileName" class="input-file-filename">&nbsp;</p>
                 </div>
                 <span class="input-validation" asp-validation-for="File"></span>
             </div>
             <div class="input-group">
-                <label class="input-label input-checkbox-container" asp-for="Encrypt">
-                    Encrypt
-                    <input class="input-checkbox" asp-for="Encrypt" type="checkbox" tabindex="4" />
+                <label class="input-label input-checkbox-container" asp-for="Encrypted">
+                    Encrypted
+                    <input class="input-checkbox" asp-for="Encrypted" type="checkbox" tabindex="3" />
                     <span class="input-checkbox-span"></span>
                 </label>
             </div>
             <div class="input-group">
-                <label class="input-label" asp-for="EncryptionType"></label>
-                <select class="input-dropdown" asp-for="EncryptionType" asp-items="Html.GetEnumSelectList<EncryptionType>()" tabindex="5"></select>
-            </div>
-            <div class="input-group">
-                <input class="input-button" type="submit" value="Parse File" tabindex="6" />
+                <input class="input-button" type="submit" value="Parse File" tabindex="4" />
             </div>
         </form>
-    </div>
-
-    <!-- Result container -->
-    <div class="home__result__container">
-        @if (Model?.File != null)
-        {
-            @if (!Model.IsAllowedToRead)
-            {
-                <!-- User not allowed to read the file -->
-                <div class="home__result">
-                    <div class="home__result__title">User not allowed to read this file.</div>
-                </div>
-            }
-            @if (Model.Original?.Count > 0)
-            {
-                <!-- Result displaying original file content -->
-                <div class="home__result">
-                    <div class="home__result__title">Original</div>
-                    <div class="home__result__content">
-                        @foreach (var line in Model.Original)
-                        {
-                            <p>@line</p>
-                        }
-                    </div>
-                </div>
-            }
-            @if (Model.Encrypted?.Count > 0)
-            {
-                <!-- Result displaying encrypted file content -->
-                <div class="home__result">
-                    <div class="home__result__title">Encrypted</div>
-                    <div class="home__result__content">
-                        @foreach (var line in Model.Encrypted)
-                        {
-                            <p>@line</p>
-                        }
-                    </div>
-                </div>
-            }
-        }
     </div>
 </div>
 

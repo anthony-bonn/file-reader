@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FileReader.UI
 {
@@ -31,9 +32,6 @@ namespace FileReader.UI
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            // IDataProtector API
-            services.AddDataProtection();
-
             // Cookie authentication
             services.AddAuthentication("FileReader.Cookie")
                 .AddCookie("FileReader.Cookie", config =>
@@ -42,7 +40,8 @@ namespace FileReader.UI
                     config.LoginPath = "/Home/Authentication";
                 });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddXmlSerializerFormatters().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

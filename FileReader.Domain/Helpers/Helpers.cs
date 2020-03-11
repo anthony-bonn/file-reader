@@ -7,26 +7,30 @@ namespace FileReader.Domain.Helpers
     public static class Helpers
     {
         /// <summary>
-        /// Gets FileType enum based on file content type
+        /// Checks whether the application supports given file type
         /// </summary>
         /// <param name="contentType"></param>
-        /// <param name="fileType">Output parameter</param>
-        /// <exception cref="NotSupportedException"></exception>
-        public static void GetFileTypeEnumFromContentType(string contentType, out FileType fileType)
+        /// <returns></returns>
+        public static bool IsFileTypeSupported(string contentType)
         {
             // supported fileTypes:
             // text/plain
             // text/xml
             // application/json
-            fileType = contentType switch
+            return contentType switch
             {
-                "text/plain" => FileType.Text,
-                "text/xml" => FileType.Xml,
-                "application/json" => FileType.Json,
-                _ => throw new NotSupportedException(message: "This type of file isn't supported."),
+                "text/plain" => true,
+                "text/xml" => true,
+                "application/json" => true,
+                _ => false,
             };
         }
 
+        /// <summary>
+        /// Checks whether the current user is allowed to read the file
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public static bool IsUserAllowed(ClaimsPrincipal user)
         {
             Random random = new Random();

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FileReader.Shared.Models.ViewModels;
 using FileReader.Services.IServices;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Authorization;
 
 namespace FileReader.UI.Controllers
@@ -14,13 +12,11 @@ namespace FileReader.UI.Controllers
     {
         private readonly IFileService _fileService;
         private readonly IAuthService _authService;
-        private readonly IDataProtector _protector;
 
-        public HomeController(IFileService fileService, IAuthService authService, IDataProtectionProvider provider)
+        public HomeController(IFileService fileService, IAuthService authService)
         {
             _fileService = fileService;
             _authService = authService;
-            _protector = provider.CreateProtector("FileReader.UI.HomeController");
         }
 
         [HttpGet]
@@ -47,13 +43,24 @@ namespace FileReader.UI.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Index(FileReaderViewModel vm)
+        public async Task<IActionResult> Index(FileReaderViewModel data)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid) return View(data);
 
-            vm = await _fileService.Process(vm, _protector, HttpContext.User);
+            Tuple<bool, byte[], string> result;
 
-            return View(vm);
+            try
+            {
+                result = await _fileService.Process(data, HttpContext.User);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home", new ErrorViewModel() { Message = e.Message });
+            }
+
+            if (!result.Item1) return RedirectToAction("Error", "Home", new ErrorViewModel() { Message = "User isn't allowed to read this file." });
+
+            return File(result.Item2, result.Item3);
         }
 
         [HttpPost]
@@ -68,10 +75,9 @@ namespace FileReader.UI.Controllers
             return Ok();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public IActionResult Error(ErrorViewModel model)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(model);
         }
     }
 }

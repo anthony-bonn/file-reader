@@ -1,5 +1,5 @@
 ﻿using FileReader.Shared.Models.ViewModels;
-using Microsoft.AspNetCore.DataProtection;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -7,6 +7,6 @@ namespace FileReader.Services.IServices
 {
     public interface IFileService
     {
-        Task<FileReaderViewModel> Process(FileReaderViewModel vm, IDataProtector protector, ClaimsPrincipal user);
+        Task<Tuple<bool, byte[], string>> Process(FileReaderViewModel vm, ClaimsPrincipal user);
     }
 }
